@@ -22,7 +22,9 @@ export function ContactCta() {
 
             <div className="flex flex-wrap gap-3 pt-4">
               <a
-                href="/Takebul_Islam_Resume.pdf"
+                href="https://docs.google.com/document/d/1WRY3zXw2sC7Yz-AT9gkw7APiPQ5o9vRXBxy0EzppeZY/export?format=pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 download="Takebul_Islam_Resume.pdf"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm shadow-xs transition-colors"
               >

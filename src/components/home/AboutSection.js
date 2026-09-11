@@ -69,7 +69,9 @@ export function AboutSection() {
 
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <a
-              href="/Takebul_Islam_Resume.pdf"
+              href="https://docs.google.com/document/d/1WRY3zXw2sC7Yz-AT9gkw7APiPQ5o9vRXBxy0EzppeZY/export?format=pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               download="Takebul_Islam_Resume.pdf"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-medium text-sm transition-all shadow-md shadow-cyan-500/20 hover:scale-[1.02]"
             >
@@ -129,24 +131,27 @@ export function AboutSection() {
               </p>
               <p className="pl-5">
                 <span className="text-sky-300">coreStack</span>: [
-                <span className="text-amber-300">&quot;React&quot;</span>,{" "}
-                <span className="text-amber-300">&quot;Next.js&quot;</span>,{" "}
+                <span className="text-amber-300">&quot;React 19&quot;</span>,{" "}
+                <span className="text-amber-300">&quot;Next.js 16&quot;</span>,{" "}
+                <span className="text-amber-300">&quot;React Router&quot;</span>,{" "}
                 <span className="text-amber-300">&quot;Node.js&quot;</span>,{" "}
                 <span className="text-amber-300">&quot;Express.js&quot;</span>,{" "}
-                <span className="text-amber-300">&quot;MongoDB&quot;</span>],
+                <span className="text-amber-300">&quot;MongoDB Atlas&quot;</span>],
               </p>
               <p className="pl-5">
-                <span className="text-sky-300">auth</span>: [
+                <span className="text-sky-300">authSecurity</span>: [
                 <span className="text-amber-300">&quot;Better Auth&quot;</span>,{" "}
-                <span className="text-amber-300">&quot;JWT/JWKS&quot;</span>,{" "}
-                <span className="text-amber-300">&quot;RBAC Matrix&quot;</span>],
+                <span className="text-amber-300">&quot;JWT&quot;</span>,{" "}
+                <span className="text-amber-300">&quot;Google OAuth&quot;</span>,{" "}
+                <span className="text-amber-300">&quot;Stripe&quot;</span>],
               </p>
               <p className="pl-5">
-                <span className="text-sky-300">tools</span>: [
-                <span className="text-amber-300">&quot;Git&quot;</span>,{" "}
+                <span className="text-sky-300">toolsDeployment</span>: [
+                <span className="text-amber-300">&quot;Git/GitHub&quot;</span>,{" "}
                 <span className="text-amber-300">&quot;Vercel&quot;</span>,{" "}
-                <span className="text-amber-300">&quot;Stripe&quot;</span>,{" "}
-                <span className="text-amber-300">&quot;Tailwind v4&quot;</span>],
+                <span className="text-amber-300">&quot;Render&quot;</span>,{" "}
+                <span className="text-amber-300">&quot;Netlify&quot;</span>,{" "}
+                <span className="text-amber-300">&quot;DevTools&quot;</span>],
               </p>
               <p className="pl-5">
                 <span className="text-sky-300">focus</span>:{" "}

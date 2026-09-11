@@ -6,28 +6,48 @@ import { FiArrowRight, FiCheck } from "react-icons/fi";
 
 const SKILL_GROUPS = [
   {
-    category: "Frontend Architecture",
-    skills: ["JavaScript (ES6+)", "React 19", "Next.js 16", "Tailwind CSS v4", "HeroUI", "HTML5 & CSS3"],
+    category: "Languages & Core",
+    skills: ["HTML5", "CSS3", "JavaScript (ES6+)"],
   },
   {
-    category: "Backend & Services",
-    skills: ["Node.js", "Express.js", "REST APIs", "Better Auth", "JWT / JWKS", "Role-Based Access (RBAC)"],
+    category: "Frontend Development",
+    skills: [
+      "React",
+      "Next.js",
+      "React Router",
+      "Tailwind CSS",
+      "HeroUI",
+      "DaisyUI",
+      "Lenis & GSAP",
+      "Framer Motion",
+      "Recharts",
+    ],
   },
   {
-    category: "Database & Storage",
-    skills: ["MongoDB Atlas", "Schema Design", "Regex Querying", "Indexing & Aggregations"],
+    category: "Backend & Systems",
+    skills: ["Node.js", "Express.js", "MongoDB Atlas", "CRUD Architecture", "REST APIs"],
   },
   {
-    category: "Payments & Cloud",
-    skills: ["Stripe Checkout", "Stripe Subscriptions", "Webhooks", "Transactional Alerts"],
+    category: "Authentication & Security",
+    skills: ["JWT Authentication", "Google OAuth", "Better Auth", "Stripe Integration"],
   },
   {
-    category: "Engineering Tooling",
-    skills: ["Git & GitHub", "Vercel", "Render", "VS Code", "ESLint & Prettier", "npm"],
+    category: "Developer Tools & Cloud",
+    skills: [
+      "Git & GitHub",
+      "VS Code",
+      "npm",
+      "Prettier & ESLint",
+      "Vercel",
+      "Netlify",
+      "Render",
+      "Chrome DevTools",
+      "Figma-to-Code",
+    ],
   },
   {
-    category: "AI-Augmented Workflow",
-    skills: ["GitHub Copilot", "Claude", "Gemini", "ChatGPT"],
+    category: "AI-Assisted Workflow",
+    skills: ["Gemini", "GitHub Copilot", "Claude", "ChatGPT"],
   },
 ];
 

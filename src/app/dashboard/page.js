@@ -585,14 +585,26 @@ export default function DashboardPage() {
                           {/* Actions */}
                           <td className="px-6 py-4 text-right">
                             <div className="flex items-center justify-end gap-1.5">
-                              <Link
-                                href={`/projects/${project.slug}`}
-                                target="_blank"
-                                className="p-2 rounded-lg text-slate-500 hover:text-blue-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                                title="View Public Page"
-                              >
-                                <FiEye className="w-4 h-4" />
-                              </Link>
+                              {project.liveUrl ? (
+                                <a
+                                  href={project.liveUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 rounded-lg text-slate-500 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                  title="View Live Site"
+                                >
+                                  <FiEye className="w-4 h-4" />
+                                </a>
+                              ) : (
+                                <Link
+                                  href="/projects"
+                                  target="_blank"
+                                  className="p-2 rounded-lg text-slate-500 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                  title="View Public Catalog"
+                                >
+                                  <FiEye className="w-4 h-4" />
+                                </Link>
+                              )}
 
                               <button
                                 type="button"

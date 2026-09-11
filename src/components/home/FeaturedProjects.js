@@ -44,7 +44,7 @@ export function FeaturedProjects({ projects = [] }) {
           href="/projects"
           className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors group"
         >
-          <span>All Case Studies &amp; Details</span>
+          <span>View All Projects</span>
           <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </motion.div>
@@ -94,7 +94,7 @@ export function FeaturedProjects({ projects = [] }) {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project, idx) => (
             <motion.div
               key={project._id || project.slug}
