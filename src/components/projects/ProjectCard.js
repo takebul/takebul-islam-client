@@ -70,7 +70,7 @@ export function ProjectCard({ project, featured = false }) {
         <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
           <Image
             src={displayImage}
-            alt={title}
+            alt={`${title} — ${subtitle || "Full-Stack Web Application"}`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"

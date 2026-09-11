@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { Logo } from "@/components/ui/Logo";
@@ -18,6 +18,7 @@ const NAV_ITEMS = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -52,7 +53,7 @@ export function Navbar() {
   const handleNavClick = (href) => {
     setMobileMenuOpen(false);
     if (pathname !== "/" && href.startsWith("#")) {
-      window.location.href = `/${href}`;
+      router.push(`/${href}`);
     }
   };
 

@@ -35,16 +35,43 @@ export function SmoothScrollProvider({ children }) {
     gsap.ticker.add(tickerUpdate);
     gsap.ticker.lagSmoothing(0);
 
-    // Global scroll helper for anchor links (#about, etc.)
+    // Initial hash scroll on mount
+    if (window.location.hash) {
+      setTimeout(() => {
+        const initialElem = document.querySelector(window.location.hash);
+        if (initialElem) {
+          lenis.scrollTo(initialElem, { offset: -70, immediate: false });
+        }
+      }, 200);
+    }
+
+    // Global butter-smooth anchor navigation handler
     const handleAnchorClick = (e) => {
       const target = e.target.closest("a");
       if (!target) return;
-      const href = target.getAttribute("href");
-      if (href && href.startsWith("#") && href.length > 1) {
-        const elem = document.querySelector(href);
-        if (elem) {
-          e.preventDefault();
-          lenis.scrollTo(elem, { offset: -70 });
+      const rawHref = target.getAttribute("href");
+      if (!rawHref) return;
+
+      // Handles both "#about" and "/#about" when on the home page
+      const isDirectHash = rawHref.startsWith("#") && rawHref.length > 1;
+      const isRootHash =
+        window.location.pathname === "/" &&
+        rawHref.startsWith("/#") &&
+        rawHref.length > 2;
+
+      if (isDirectHash || isRootHash) {
+        const selector = isRootHash ? rawHref.substring(1) : rawHref;
+        try {
+          const elem = document.querySelector(selector);
+          if (elem) {
+            e.preventDefault();
+            lenis.scrollTo(elem, { offset: -70 });
+            if (window.history?.pushState) {
+              window.history.pushState(null, "", selector);
+            }
+          }
+        } catch {
+          // Ignore invalid selector queries
         }
       }
     };
