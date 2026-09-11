@@ -4,12 +4,15 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProjectCard } from "@/components/projects/ProjectCard";
+import { Pagination } from "@/components/ui/Pagination";
 import { FiArrowRight, FiFolder } from "react-icons/fi";
 
 const CATEGORIES = ["All", "Full-Stack", "Marketplace", "Booking", "SaaS"];
+const PAGE_SIZE = 6;
 
 export function FeaturedProjects({ projects = [] }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredProjects = useMemo(() => {
     if (selectedCategory === "All") return projects;
@@ -17,6 +20,19 @@ export function FeaturedProjects({ projects = [] }) {
       (p) => p.category && p.category.toLowerCase() === selectedCategory.toLowerCase()
     );
   }, [projects, selectedCategory]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredProjects.length / PAGE_SIZE));
+  const validCurrentPage = Math.min(currentPage, totalPages);
+
+  const paginatedProjects = useMemo(() => {
+    const start = (validCurrentPage - 1) * PAGE_SIZE;
+    return filteredProjects.slice(start, start + PAGE_SIZE);
+  }, [filteredProjects, validCurrentPage]);
+
+  const handleCategoryChange = (cat) => {
+    setSelectedCategory(cat);
+    setCurrentPage(1);
+  };
 
   return (
     <section id="projects" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20 overflow-hidden">
@@ -63,7 +79,7 @@ export function FeaturedProjects({ projects = [] }) {
             <button
               key={cat}
               type="button"
-              onClick={() => setSelectedCategory(cat)}
+              onClick={() => handleCategoryChange(cat)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 isSelected
                   ? "bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-500 dark:to-blue-600 text-white shadow-md shadow-cyan-500/25 scale-105"
@@ -87,29 +103,41 @@ export function FeaturedProjects({ projects = [] }) {
           </p>
           <button
             type="button"
-            onClick={() => setSelectedCategory("All")}
+            onClick={() => handleCategoryChange("All")}
             className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-600 text-white cursor-pointer"
           >
             Show All
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, idx) => (
-            <motion.div
-              key={project._id || project.slug}
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, delay: idx * 0.12, ease: "easeOut" }}
-            >
-              <ProjectCard
-                project={project}
-                featured={Boolean(project.featured)}
-              />
-            </motion.div>
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {paginatedProjects.map((project, idx) => (
+              <motion.div
+                key={project._id || project.slug}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
+              >
+                <ProjectCard
+                  project={project}
+                  featured={Boolean(project.featured)}
+                />
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Pagination Controls */}
+          <Pagination
+            currentPage={validCurrentPage}
+            totalPages={totalPages}
+            totalItems={filteredProjects.length}
+            pageSize={PAGE_SIZE}
+            onPageChange={setCurrentPage}
+            scrollToId="projects"
+          />
+        </>
       )}
     </section>
   );

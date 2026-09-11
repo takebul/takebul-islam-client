@@ -25,7 +25,7 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Hero />
+      <Hero projectCount={projects.length} />
       <Snapshot />
       <AboutSection />
       <SkillsPreview />

@@ -63,11 +63,29 @@ const PHOTO_OPTIONS = [
   },
 ];
 
-export function Hero() {
+export function Hero({ projectCount = 3 }) {
   const [titleIndex, setTitleIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(PHOTO_OPTIONS[0]);
+  const [liveCount, setLiveCount] = useState(
+    typeof projectCount === "number" && projectCount > 0 ? projectCount : 3
+  );
+
+  useEffect(() => {
+    if (typeof projectCount === "number" && projectCount > 0) {
+      setLiveCount(projectCount);
+    } else {
+      fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8541"}/projects`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.data && Array.isArray(data.data) && data.data.length > 0) {
+            setLiveCount(data.data.length);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [projectCount]);
 
   // Dynamic typewriter cycler
   useEffect(() => {
@@ -366,7 +384,7 @@ export function Hero() {
           <div className="p-3.5 rounded-xl bg-white/80 dark:bg-slate-900/60 border border-slate-200/90 dark:border-slate-800/80 backdrop-blur-sm text-center hover:border-cyan-500/40 transition-colors shadow-2xs group">
             <div className="text-2xl sm:text-3xl font-extrabold mb-0.5 font-mono">
               <RollingNumber
-                value={15}
+                value={liveCount}
                 suffix="+"
                 gradient="from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-500"
                 delay={0.15}
