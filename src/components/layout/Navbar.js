@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
+import { Logo } from "@/components/ui/Logo";
 import { FiGithub, FiLinkedin, FiFileText, FiMenu, FiX } from "react-icons/fi";
 
 const NAV_ITEMS = [
@@ -66,18 +67,11 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Brand Logo */}
-          <Link
-            href="/#hero"
+          <Logo
             onClick={() => handleNavClick("#hero")}
-            className="group flex items-center gap-2.5 font-bold text-lg tracking-tight text-slate-900 dark:text-white"
-          >
-            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-sky-400 text-white font-mono text-sm shadow-sm group-hover:scale-105 transition-transform">
-              TI
-            </span>
-            <span className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors">
-              Takebul Islam
-            </span>
-          </Link>
+            href="/#hero"
+            size="md"
+          />
 
           {/* Desktop Navigation Links (ScrollSpy) */}
           <nav className="hidden md:flex items-center gap-1 bg-slate-100/80 dark:bg-slate-900/80 p-1.5 rounded-full border border-slate-200/80 dark:border-slate-800/80 backdrop-blur-md shadow-xs">

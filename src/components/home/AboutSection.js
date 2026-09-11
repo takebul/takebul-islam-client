@@ -1,24 +1,40 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { FiMapPin, FiCompass, FiGlobe, FiMail, FiDownload, FiArrowRight, FiCheck } from "react-icons/fi";
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-sky-400">
-          About Me
+    <section id="about" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20 overflow-hidden">
+      {/* Section Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="text-center max-w-3xl mx-auto mb-16"
+      >
+        <span className="text-xs font-semibold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 font-mono">
+          // About Me
         </span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-1">
-          Engineering Real Products with Curiosity & Discipline
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-1.5">
+          Engineering Real Products with Curiosity &amp; Discipline
         </h2>
         <p className="mt-3 text-base text-slate-600 dark:text-slate-400">
           I don&apos;t just design interfaces or write fragmented scripts. I build complete, production-ready web applications backed by resilient APIs and secure databases.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        {/* Left Column: Narrative & Quick Stats */}
-        <div className="lg:col-span-6 space-y-6">
+        {/* Left Column: Narrative & Highlights */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="lg:col-span-6 space-y-6"
+        >
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
             I am a Full-Stack Web Developer based in <strong className="text-slate-900 dark:text-white">Nazirpur, Pirojpur, Bangladesh</strong>. I enjoy turning raw ideas into working features and writing clean, scalable logic that makes software feel fast, secure, and modern.
           </p>
@@ -27,7 +43,7 @@ export function AboutSection() {
             My experience spans frontend state and responsive UI architectures using React 19 and Next.js, as well as decoupled backend architectures powered by Express.js, MongoDB Atlas, and cryptographic JWKS authentication with Better Auth.
           </p>
 
-          {/* Highlights checklist */}
+          {/* Highlights checklist with staggered entrance */}
           <div className="space-y-2.5 pt-2">
             {[
               "Complete full-stack development from system design to live cloud deployment",
@@ -35,12 +51,19 @@ export function AboutSection() {
               "Optimized MongoDB data schemas with indexing, regex search, and atomic updates",
               "Passionate learner pursuing Bachelor of Arts (Honours) in English with high discipline",
             ].map((item, idx) => (
-              <div key={idx} className="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-300">
-                <span className="w-5 h-5 rounded-full bg-blue-100 dark:bg-sky-950 text-blue-600 dark:text-sky-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * idx, ease: "easeOut" }}
+                className="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-300 group"
+              >
+                <span className="w-5 h-5 rounded-full bg-cyan-100 dark:bg-cyan-950/80 text-cyan-600 dark:text-cyan-400 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
                   <FiCheck className="w-3 h-3" />
                 </span>
                 <span>{item}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -48,7 +71,7 @@ export function AboutSection() {
             <a
               href="/Takebul_Islam_Resume.pdf"
               download="Takebul_Islam_Resume.pdf"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-colors shadow-xs"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-medium text-sm transition-all shadow-md shadow-cyan-500/20 hover:scale-[1.02]"
             >
               <FiDownload className="w-4 h-4" />
               <span>Download Resume</span>
@@ -56,17 +79,23 @@ export function AboutSection() {
 
             <Link
               href="/about"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 dark:text-sky-400 hover:text-blue-700 dark:hover:text-sky-300 transition-colors group"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors group"
             >
-              <span>Full Story & Credentials</span>
+              <span>Full Story &amp; Credentials</span>
               <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Column: macOS Dark Code Terminal */}
-        <div className="lg:col-span-6">
-          <div className="rounded-3xl border border-slate-800 bg-[#0c1017] shadow-2xl overflow-hidden font-mono text-xs sm:text-sm">
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="lg:col-span-6"
+        >
+          <div className="rounded-3xl border border-slate-800 bg-[#0c1017] shadow-2xl overflow-hidden font-mono text-xs sm:text-sm hover:border-cyan-500/30 transition-colors">
             {/* Terminal Window Header */}
             <div className="px-4 py-3 bg-[#161b22] border-b border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -121,7 +150,7 @@ export function AboutSection() {
               </p>
               <p className="pl-5">
                 <span className="text-sky-300">focus</span>:{" "}
-                <span className="text-emerald-400">&quot;Building complete apps from idea to deployment&quot;</span>,
+                <span className="text-emerald-400">&quot;Building complete applications from idea to deployment&quot;</span>,
               </p>
               <p className="pl-5">
                 <span className="text-sky-300">available</span>:{" "}
@@ -134,7 +163,7 @@ export function AboutSection() {
               <p>&#125;;</p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

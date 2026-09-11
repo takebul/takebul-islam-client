@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/ui/Logo";
 import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiArrowUpRight, FiHeart } from "react-icons/fi";
 
 export function Footer() {
@@ -10,12 +11,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Col 1: Identity & Bio */}
           <div className="md:col-span-2 space-y-4">
-            <Link href="/" className="inline-flex items-center gap-2 font-bold text-lg text-slate-900 dark:text-white">
-              <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-sky-400 text-white font-mono text-sm">
-                TI
-              </span>
-              <span>Takebul Islam</span>
-            </Link>
+            <Logo href="/" size="md" />
             <p className="text-slate-600 dark:text-slate-400 text-sm max-w-md leading-relaxed">
               Full-Stack Web Developer building complete, production-ready web applications from idea to deployment. Specializing in Next.js, React, Node.js, Express.js, and MongoDB.
             </p>

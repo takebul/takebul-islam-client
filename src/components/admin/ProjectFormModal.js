@@ -186,6 +186,33 @@ export function ProjectFormModal({ isOpen, onClose, onSave, project = null, isSa
     }
   };
 
+  // Lock body scroll and prevent background scroll while modal is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleChange = (e) => {
@@ -265,10 +292,22 @@ export function ProjectFormModal({ isOpen, onClose, onSave, project = null, isSa
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
-      <div className="relative w-full max-w-4xl bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-        {/* Modal Header */}
-        <div className="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-950/50">
+    <div
+      className="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-hidden"
+      data-lenis-prevent="true"
+      role="dialog"
+      aria-modal="true"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div
+        className="relative w-full max-w-4xl bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden max-h-[92vh] h-[92vh] sm:h-[88vh] flex flex-col"
+        data-lenis-prevent="true"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Modal Header (Pinned) */}
+        <div className="flex-shrink-0 px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-950/50">
           <div>
             <h2 className="text-xl font-bold text-slate-900 dark:text-white">
               {isEditing ? `Edit Project: ${project.title}` : "Add New Portfolio Project"}
@@ -280,15 +319,25 @@ export function ProjectFormModal({ isOpen, onClose, onSave, project = null, isSa
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors"
+            aria-label="Close modal"
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <FiX className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Modal Form Body */}
-        <form onSubmit={handleSubmit} className="overflow-y-auto p-6 space-y-8 flex-grow">
-          {/* Section 1: Basic Information */}
+        {/* Modal Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="flex-1 min-h-0 flex flex-col overflow-hidden"
+          data-lenis-prevent="true"
+        >
+          {/* Scrollable Form Content */}
+          <div
+            className="flex-1 min-h-0 overflow-y-auto p-6 sm:p-8 space-y-8 overscroll-contain"
+            data-lenis-prevent="true"
+          >
+            {/* Section 1: Basic Information */}
           <fieldset className="space-y-4">
             <legend className="text-sm font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400 flex items-center gap-2 mb-3">
               <FiInfo className="w-4 h-4" /> 1. Basic Information
@@ -740,23 +789,30 @@ export function ProjectFormModal({ isOpen, onClose, onSave, project = null, isSa
             </div>
           </fieldset>
 
-          {/* Modal Footer Controls */}
-          <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end gap-3 sticky bottom-0 bg-white dark:bg-slate-900 py-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSaving}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-medium transition-colors shadow-xs"
-            >
-              <FiSave className="w-4 h-4" />
-              <span>{isSaving ? "Saving to Database..." : isEditing ? "Update Project" : "Create Project"}</span>
-            </button>
+          </div>
+
+          {/* Modal Footer Controls (Pinned at bottom) */}
+          <div className="flex-shrink-0 px-6 py-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-sm">
+            <span className="text-xs text-slate-500 dark:text-slate-400 hidden sm:inline">
+              * Required fields. All changes save directly to MongoDB Atlas.
+            </span>
+            <div className="flex items-center gap-3 ml-auto">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSaving}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-medium transition-colors shadow-xs cursor-pointer"
+              >
+                {isSaving ? <FiLoader className="w-4 h-4 animate-spin" /> : <FiSave className="w-4 h-4" />}
+                <span>{isSaving ? "Saving to Database..." : isEditing ? "Update Project" : "Create Project"}</span>
+              </button>
+            </div>
           </div>
         </form>
       </div>

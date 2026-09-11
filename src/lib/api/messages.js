@@ -69,3 +69,28 @@ export async function markMessageRead(id, token, read = true) {
     throw error;
   }
 }
+
+/**
+ * Delete contact message (Admin Only)
+ */
+export async function deleteContactMessage(id, token) {
+  try {
+    const res = await fetch(`${SERVER_URL}/messages/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || `Failed to delete message: ${res.status}`);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("[API] deleteContactMessage error:", error);
+    throw error;
+  }
+}
+

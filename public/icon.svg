@@ -1,11 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
   <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#06b6d4" />
-      <stop offset="100%" stop-color="#3b82f6" />
+    <linearGradient id="ti-v2-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="45%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#0284c7" />
     </linearGradient>
+    <linearGradient id="ti-v2-indigo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="55%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+    <linearGradient id="ti-v2-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.85" />
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.25" />
+    </linearGradient>
+    <radialGradient id="ti-v2-core" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.4" />
+      <stop offset="60%" stop-color="#0369a1" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#020617" stop-opacity="0" />
+    </radialGradient>
   </defs>
-  <rect width="32" height="32" rx="8" fill="#0a0a0f" />
-  <rect x="1" y="1" width="30" height="30" rx="7" fill="none" stroke="url(#g)" stroke-width="1.5" />
-  <text x="16" y="22" font-family="system-ui, sans-serif" font-weight="900" font-size="16" fill="url(#g)" text-anchor="middle">T</text>
+
+  <rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="#090d16" stroke="url(#ti-v2-border)" stroke-width="1.5" />
+  <rect x="2" y="2" width="36" height="36" rx="9" fill="url(#ti-v2-core)" />
+
+  <path d="M 4 8 L 4 4 L 8 4" stroke="#00f2fe" stroke-width="1.2" stroke-linecap="round" opacity="0.75" />
+  <path d="M 36 32 L 36 36 L 32 36" stroke="#6366f1" stroke-width="1.2" stroke-linecap="round" opacity="0.75" />
+
+  <path d="M 9.5 10.5 H 21.5 L 17.5 14.5 H 16.5 V 27.5 C 16.5 28.3 15.8 29 15 29 H 13.5 C 12.7 29 12 28.3 12 27.5 V 14.5 H 9.5 C 8.7 14.5 8 13.8 8 13 V 12 C 8 11.2 8.7 10.5 9.5 10.5 Z" fill="url(#ti-v2-cyan)" />
+  <path d="M 25 10.5 L 20.8 14.7 C 20.3 15.2 20.3 15.8 20.3 16.5 V 27.5 C 20.3 28.3 21 29 21.8 29 H 23.3 C 24.1 29 24.8 28.3 24.8 27.5 V 14.5 L 25.8 13.5 C 26.4 12.9 26.4 11.9 25.8 11.3 L 25.5 11 C 25.3 10.8 25.1 10.6 25 10.5 Z" fill="url(#ti-v2-indigo)" />
+  <rect x="27" y="6.8" width="3.6" height="3.6" rx="0.9" transform="rotate(45 27 6.8)" fill="#00f2fe" />
+  <circle cx="14.25" cy="19.5" r="1.1" fill="#ffffff" opacity="0.95" />
 </svg>

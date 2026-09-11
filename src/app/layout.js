@@ -4,6 +4,7 @@ import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvide
 import { BackgroundParticles } from "@/components/ui/BackgroundParticles";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Toaster } from "sonner";
 
 export const metadata = {
@@ -65,6 +66,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <SmoothScrollProvider>
             <BackgroundParticles />
+            <ScrollProgress />
             <Navbar />
             <main className="flex-grow pt-20">
               {children}

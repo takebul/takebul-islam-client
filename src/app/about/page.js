@@ -1,6 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FiAward, FiBookOpen, FiCode, FiCompass, FiCpu, FiGlobe, FiMapPin, FiMail, FiDownload, FiArrowRight } from "react-icons/fi";
+import {
+  FiAward,
+  FiBookOpen,
+  FiCode,
+  FiCompass,
+  FiCpu,
+  FiGlobe,
+  FiMapPin,
+  FiMail,
+  FiDownload,
+  FiArrowRight,
+} from "react-icons/fi";
 
 export const metadata = {
   title: "About Me",
@@ -21,7 +32,9 @@ export default function AboutPage() {
             Engineering real solutions with curiosity and discipline.
           </h1>
           <p className="mt-4 text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-            Full-Stack Web Developer with hands-on experience building and shipping complete web applications with modern React, Next.js, Node.js, and MongoDB.
+            Full-Stack Web Developer with hands-on experience building and
+            shipping complete web applications with modern React, Next.js,
+            Node.js, and MongoDB.
           </p>
         </div>
 
@@ -40,8 +53,12 @@ export default function AboutPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 p-3 rounded-2xl glass-panel">
-                <p className="text-sm font-bold text-slate-900 dark:text-white">Takebul Islam</p>
-                <p className="text-xs text-blue-600 dark:text-sky-400 font-medium">Full-Stack Web Developer</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">
+                  Takebul Islam
+                </p>
+                <p className="text-xs text-blue-600 dark:text-sky-400 font-medium">
+                  Full-Stack Web Developer
+                </p>
               </div>
             </div>
 
@@ -58,7 +75,8 @@ export default function AboutPage() {
 
               <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
                 <span className="text-slate-500 dark:text-slate-400 flex items-center gap-2">
-                  <FiCompass className="w-4 h-4 text-blue-500" /> Work Preference
+                  <FiCompass className="w-4 h-4 text-blue-500" /> Work
+                  Preference
                 </span>
                 <span className="font-medium text-slate-900 dark:text-white">
                   Remote / Hybrid / Onsite
@@ -112,13 +130,24 @@ export default function AboutPage() {
                 Career Objective & Technical Drive
               </h2>
               <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                I am a Full-Stack Web Developer passionate about turning complex product requirements into resilient, elegant, and user-friendly web software.
+                I am a Full-Stack Web Developer passionate about turning complex
+                product requirements into resilient, elegant, and user-friendly
+                web applications.
               </p>
               <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                Unlike developers who only scratch the surface of frontend templates or specialize strictly in isolated code snippets, I take pride in understanding the complete architectural pipeline: from crafting responsive component trees with Tailwind CSS and Next.js, to structuring REST API endpoints with Express, protecting routes with cryptographic JWKS tokens, and modeling high-throughput MongoDB collections.
+                Unlike developers who only scratch the surface of frontend
+                templates or specialize strictly in isolated code snippets, I
+                take pride in understanding the complete architectural pipeline:
+                from crafting responsive component trees with Tailwind CSS and
+                Next.js, to structuring REST API endpoints with Express,
+                protecting routes with cryptographic JWKS tokens, and modeling
+                high-throughput MongoDB collections.
               </p>
               <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                I am actively seeking an entry-level remote, hybrid, or on-site role (full-time, internship, or contract) where I can contribute to high-impact production engineering teams while continually expanding my skills.
+                I am actively seeking an entry-level remote, hybrid, or on-site
+                role (full-time, internship, or contract) where I can contribute
+                to high-impact production engineering teams while continually
+                expanding my skills.
               </p>
             </div>
 
@@ -134,7 +163,9 @@ export default function AboutPage() {
                     <span>Clean, Predictable Architecture</span>
                   </div>
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    I believe readability is a key engineering metric. Code should be straightforward, modular, and easy for any teammate to maintain and audit.
+                    I believe readability is a key engineering metric. Code
+                    should be straightforward, modular, and easy for any
+                    teammate to maintain and audit.
                   </p>
                 </div>
 
@@ -144,7 +175,9 @@ export default function AboutPage() {
                     <span>Server-Enforced Security</span>
                   </div>
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Client-side role gating is cosmetic; true security resides on the server. I protect backend routes with verified cryptographic tokens and role policies.
+                    Client-side role gating is cosmetic; true security resides
+                    on the server. I protect backend routes with verified
+                    cryptographic tokens and role policies.
                   </p>
                 </div>
 
@@ -154,7 +187,9 @@ export default function AboutPage() {
                     <span>User Experience & Performance</span>
                   </div>
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    No layout shifts, accessible contrast, responsive designs across mobile and desktop, and meaningful empty/loading/error feedback.
+                    No layout shifts, accessible contrast, responsive designs
+                    across mobile and desktop, and meaningful
+                    empty/loading/error feedback.
                   </p>
                 </div>
 
@@ -164,7 +199,8 @@ export default function AboutPage() {
                     <span>Continuous Improvement</span>
                   </div>
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Shipping production code reveals real edge cases. I embrace debugging and refining features based on live usage.
+                    Shipping production code reveals real edge cases. I embrace
+                    debugging and refining features based on live usage.
                   </p>
                 </div>
               </div>
@@ -183,13 +219,17 @@ export default function AboutPage() {
                     Jan 2026 – Sep 2026
                   </span>
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                    Full-Stack Web Development — Certificate of Completion with Excellence
+                    Full-Stack Web Development — Certificate of Completion with
+                    Excellence
                   </h3>
                   <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
                     Programming Hero
                   </p>
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Intensive engineering program covering modern JavaScript, React, Next.js, Node.js, Express, MongoDB, Better Auth, Stripe, and full-stack deployment. Successfully completed every assignment with full marks.
+                    Intensive engineering program covering modern JavaScript,
+                    React, Next.js, Node.js, Express, MongoDB, Better Auth,
+                    Stripe, and full-stack deployment. Successfully completed
+                    every assignment with full marks.
                   </p>
                 </div>
 
@@ -205,7 +245,9 @@ export default function AboutPage() {
                     Suhrawardy Government College, Pirojpur • 1st Year (Honours)
                   </p>
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Developing professional English communication proficiency, critical literature analysis, and documentation skills that elevate engineering collaboration.
+                    Developing professional English communication proficiency,
+                    critical literature analysis, and documentation skills that
+                    elevate engineering collaboration.
                   </p>
                 </div>
 
@@ -218,10 +260,12 @@ export default function AboutPage() {
                     Alim — Higher Secondary / Intermediate Equivalent
                   </h3>
                   <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Sarsina Darussunnat Kamil Madrasah, Pirojpur • Bangladesh Madrasah Education Board
+                    Sarsina Darussunnat Kamil Madrasah, Pirojpur • Bangladesh
+                    Madrasah Education Board
                   </p>
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Achieved GPA 4.71 / 5.00 with academic discipline and high distinction.
+                    Achieved GPA 4.71 / 5.00 with academic discipline and high
+                    distinction.
                   </p>
                 </div>
               </div>

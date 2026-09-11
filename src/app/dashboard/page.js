@@ -11,7 +11,11 @@ import {
   updateProject,
   deleteProject,
 } from "@/lib/api/projects";
-import { getContactMessages, markMessageRead } from "@/lib/api/messages";
+import {
+  getContactMessages,
+  markMessageRead,
+  deleteContactMessage,
+} from "@/lib/api/messages";
 import { ProjectFormModal } from "@/components/admin/ProjectFormModal";
 import { DeleteConfirmModal } from "@/components/admin/DeleteConfirmModal";
 import { toast } from "sonner";
@@ -31,11 +35,13 @@ import {
   FiLayers,
   FiShield,
   FiArrowUpRight,
+  FiClock,
 } from "react-icons/fi";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { data: session, isPending: isSessionLoading } = authClient.useSession();
+  const { data: session, isPending: isSessionLoading } =
+    authClient.useSession();
 
   const [authToken, setAuthToken] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -66,6 +72,10 @@ export default function DashboardPage() {
   const [projectToDelete, setProjectToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Message delete state
+  const [messageToDelete, setMessageToDelete] = useState(null);
+  const [isDeletingMessage, setIsDeletingMessage] = useState(false);
+
   // Verify Admin Session
   useEffect(() => {
     async function verify() {
@@ -77,7 +87,7 @@ export default function DashboardPage() {
         return;
       }
 
-      const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "takebulislam@gmail.com";
+      const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
       const userRole = session.user.role;
       const userEmail = session.user.email?.toLowerCase();
 
@@ -111,10 +121,11 @@ export default function DashboardPage() {
         setStats(
           projRes.stats || {
             total: projRes.data.length,
-            published: projRes.data.filter((p) => p.status === "published").length,
+            published: projRes.data.filter((p) => p.status === "published")
+              .length,
             draft: projRes.data.filter((p) => p.status === "draft").length,
             featured: projRes.data.filter((p) => p.featured).length,
-          }
+          },
         );
       }
 
@@ -189,9 +200,15 @@ export default function DashboardPage() {
   const handleToggleFeatured = async (project) => {
     try {
       const updatedFeatured = !project.featured;
-      await updateProject(project._id, { featured: updatedFeatured }, authToken);
+      await updateProject(
+        project._id,
+        { featured: updatedFeatured },
+        authToken,
+      );
       toast.success(
-        updatedFeatured ? `"${project.title}" set to Featured.` : `"${project.title}" unfeatured.`
+        updatedFeatured
+          ? `"${project.title}" set to Featured.`
+          : `"${project.title}" unfeatured.`,
       );
       await loadDashboardData();
     } catch (error) {
@@ -204,11 +221,39 @@ export default function DashboardPage() {
       await markMessageRead(messageId, authToken, true);
       toast.success("Message marked as read.");
       setMessages((prev) =>
-        prev.map((m) => (m._id === messageId ? { ...m, read: true } : m))
+        prev.map((m) => (m._id === messageId ? { ...m, read: true } : m)),
       );
     } catch (error) {
       toast.error("Failed to update message status.");
     }
+  };
+
+  const handleConfirmDeleteMessage = async () => {
+    if (!messageToDelete?._id) return;
+    setIsDeletingMessage(true);
+    try {
+      await deleteContactMessage(messageToDelete._id, authToken);
+      toast.success("Message deleted successfully.");
+      setMessages((prev) => prev.filter((m) => m._id !== messageToDelete._id));
+      setMessageToDelete(null);
+    } catch (error) {
+      toast.error(error.message || "Failed to delete message.");
+    } finally {
+      setIsDeletingMessage(false);
+    }
+  };
+
+  const formatMessageTime = (dateStr) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    return date.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
   };
 
   const handleSignOut = async () => {
@@ -243,7 +288,9 @@ export default function DashboardPage() {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 space-y-4">
         <div className="w-12 h-12 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
-        <p className="text-sm font-medium text-slate-500">Verifying administrator credentials...</p>
+        <p className="text-sm font-medium text-slate-500">
+          Verifying administrator credentials...
+        </p>
       </div>
     );
   }
@@ -267,7 +314,11 @@ export default function DashboardPage() {
                 </span>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Logged in as <strong className="text-slate-800 dark:text-slate-200">{session?.user?.name || "Takebul Islam"}</strong> ({session?.user?.email})
+                Logged in as{" "}
+                <strong className="text-slate-800 dark:text-slate-200">
+                  {session?.user?.name || "Takebul Islam"}
+                </strong>{" "}
+                ({session?.user?.email})
               </p>
             </div>
           </div>
@@ -280,7 +331,9 @@ export default function DashboardPage() {
               className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               title="Refresh Data"
             >
-              <FiRefreshCw className={`w-4 h-4 ${isLoadingData ? "animate-spin" : ""}`} />
+              <FiRefreshCw
+                className={`w-4 h-4 ${isLoadingData ? "animate-spin" : ""}`}
+              />
             </button>
 
             <Link
@@ -368,7 +421,9 @@ export default function DashboardPage() {
               }`}
             >
               <FiMail className="w-3.5 h-3.5" />
-              <span>Inbox ({messages.filter((m) => !m.read).length} unread)</span>
+              <span>
+                Inbox ({messages.filter((m) => !m.read).length} unread)
+              </span>
             </button>
           </div>
 
@@ -435,10 +490,18 @@ export default function DashboardPage() {
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
                     {filteredProjects.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
+                        <td
+                          colSpan={6}
+                          className="px-6 py-12 text-center text-slate-500 dark:text-slate-400"
+                        >
                           <FiFolder className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                          <p className="font-semibold text-slate-800 dark:text-slate-200">No projects found</p>
-                          <p className="text-xs mt-0.5">Click &quot;Add New Project&quot; above to create your first portfolio entry.</p>
+                          <p className="font-semibold text-slate-800 dark:text-slate-200">
+                            No projects found
+                          </p>
+                          <p className="text-xs mt-0.5">
+                            Click &quot;Add New Project&quot; above to create
+                            your first portfolio entry.
+                          </p>
                         </td>
                       </tr>
                     ) : (
@@ -502,9 +565,15 @@ export default function DashboardPage() {
                                   ? "text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-950/40"
                                   : "text-slate-300 hover:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
                               }`}
-                              title={project.featured ? "Featured Project" : "Click to feature"}
+                              title={
+                                project.featured
+                                  ? "Featured Project"
+                                  : "Click to feature"
+                              }
                             >
-                              <FiStar className={`w-4 h-4 ${project.featured ? "fill-amber-400" : ""}`} />
+                              <FiStar
+                                className={`w-4 h-4 ${project.featured ? "fill-amber-400" : ""}`}
+                              />
                             </button>
                           </td>
 
@@ -566,7 +635,9 @@ export default function DashboardPage() {
                 <div className="p-12 text-center text-slate-500">
                   <FiMail className="w-8 h-8 mx-auto mb-2 opacity-50" />
                   <p className="font-semibold">No messages yet</p>
-                  <p className="text-xs mt-1">Inquiries submitted via the Contact form will appear here.</p>
+                  <p className="text-xs mt-1">
+                    Inquiries submitted via the Contact form will appear here.
+                  </p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -592,20 +663,31 @@ export default function DashboardPage() {
                             {msg.email}
                           </a>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs text-slate-400">
-                            {new Date(msg.createdAt).toLocaleDateString()}
+                        <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                          <span className="inline-flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/90 px-2.5 py-1 rounded-lg border border-slate-200/60 dark:border-slate-700/60 font-medium">
+                            <FiClock className="w-3.5 h-3.5 text-sky-500" />
+                            <span>{formatMessageTime(msg.createdAt)}</span>
                           </span>
                           {!msg.read && (
                             <button
                               type="button"
                               onClick={() => handleMarkMessageRead(msg._id)}
-                              className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+                              className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 px-2.5 py-1 rounded-lg transition-colors cursor-pointer border border-emerald-200/50 dark:border-emerald-800/40"
+                              title="Mark as Read"
                             >
                               <FiCheckCircle className="w-3.5 h-3.5" />
                               <span>Mark Read</span>
                             </button>
                           )}
+                          <button
+                            type="button"
+                            onClick={() => setMessageToDelete(msg)}
+                            className="inline-flex items-center gap-1 text-xs font-semibold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/40 px-2.5 py-1 rounded-lg transition-colors cursor-pointer border border-red-200/50 dark:border-red-800/40"
+                            title="Delete Message"
+                          >
+                            <FiTrash2 className="w-3.5 h-3.5" />
+                            <span>Delete</span>
+                          </button>
                         </div>
                       </div>
 
@@ -648,6 +730,57 @@ export default function DashboardPage() {
         projectTitle={projectToDelete?.title || "Project"}
         isDeleting={isDeleting}
       />
+
+      {/* Message Delete Confirmation Dialog */}
+      {messageToDelete && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4 overflow-hidden"
+          data-lenis-prevent="true"
+          role="dialog"
+          aria-modal="true"
+          onClick={() => {
+            if (!isDeletingMessage) setMessageToDelete(null);
+          }}
+        >
+          <div
+            className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl p-6 text-center space-y-4"
+            data-lenis-prevent="true"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center mx-auto">
+              <FiTrash2 className="w-6 h-6" />
+            </div>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+              Delete Message?
+            </h3>
+
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              Are you sure you want to permanently delete the message from <strong className="text-slate-900 dark:text-white">&quot;{messageToDelete.name}&quot;</strong> ({messageToDelete.email})? This action cannot be undone.
+            </p>
+
+            <div className="flex items-center justify-center gap-3 pt-3">
+              <button
+                type="button"
+                onClick={() => setMessageToDelete(null)}
+                disabled={isDeletingMessage}
+                className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDeleteMessage}
+                disabled={isDeletingMessage}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white text-sm font-medium transition-colors shadow-xs cursor-pointer"
+              >
+                <FiTrash2 className="w-4 h-4" />
+                <span>{isDeletingMessage ? "Deleting..." : "Yes, Delete Message"}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

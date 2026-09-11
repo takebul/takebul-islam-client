@@ -16,6 +16,14 @@ export function SmoothScrollProvider({ children }) {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       orientation: "vertical",
+      prevent: (node) => {
+        return (
+          node?.hasAttribute?.("data-lenis-prevent") ||
+          Boolean(node?.closest?.("[data-lenis-prevent]")) ||
+          Boolean(node?.closest?.('[role="dialog"]')) ||
+          Boolean(node?.closest?.(".modal-scrollable"))
+        );
+      },
     });
 
     lenis.on("scroll", ScrollTrigger.update);

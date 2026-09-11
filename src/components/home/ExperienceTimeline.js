@@ -1,4 +1,7 @@
+"use client";
+
 import { FiAward, FiBookOpen, FiCalendar, FiCheckCircle } from "react-icons/fi";
+import { motion } from "framer-motion";
 
 const TIMELINE_ITEMS = [
   {
@@ -35,8 +38,14 @@ const TIMELINE_ITEMS = [
 
 export function ExperienceTimeline() {
   return (
-    <section id="experience" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
-      <div className="text-center max-w-3xl mx-auto mb-16">
+    <section id="experience" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20 overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="text-center max-w-3xl mx-auto mb-16"
+      >
         <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-sky-400">
           Education & Credentials
         </span>
@@ -46,11 +55,17 @@ export function ExperienceTimeline() {
         <p className="mt-3 text-base text-slate-600 dark:text-slate-400">
           A track record of continuous learning, academic excellence, and hands-on software development mastery.
         </p>
-      </div>
+      </motion.div>
 
       <div className="relative max-w-4xl mx-auto">
-        {/* Center Vertical Gradient Connector Line */}
-        <div className="absolute left-4 md:left-1/2 top-4 bottom-4 -translate-x-1/2 w-0.5 bg-gradient-to-b from-blue-500 via-sky-400 to-indigo-500 opacity-30 dark:opacity-40" />
+        {/* Center Vertical Gradient Connector Line with Scroll Reveal */}
+        <motion.div
+          initial={{ scaleY: 0, originY: 0, opacity: 0 }}
+          whileInView={{ scaleY: 1, opacity: 1 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="absolute left-4 md:left-1/2 top-4 bottom-4 -translate-x-1/2 w-0.5 bg-gradient-to-b from-blue-500 via-sky-400 to-indigo-500 opacity-40 dark:opacity-50"
+        />
 
         <div className="space-y-12">
           {TIMELINE_ITEMS.map((item, idx) => {
@@ -58,24 +73,35 @@ export function ExperienceTimeline() {
             const isEven = idx % 2 === 0;
 
             return (
-              <div
+              <motion.div
                 key={idx}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
                 className={`relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-12 ${
                   isEven ? "md:flex-row-reverse" : ""
                 }`}
               >
                 {/* Center Node Icon */}
-                <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-10 h-10 rounded-full border-4 border-white dark:border-slate-900 bg-gradient-to-tr from-blue-600 to-sky-400 text-white flex items-center justify-center shadow-lg z-10">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20, delay: idx * 0.15 + 0.1 }}
+                  className="absolute left-4 md:left-1/2 -translate-x-1/2 w-10 h-10 rounded-full border-4 border-white dark:border-slate-900 bg-gradient-to-tr from-blue-600 to-sky-400 text-white flex items-center justify-center shadow-lg z-10"
+                >
                   <Icon className="w-4 h-4" />
-                </div>
+                </motion.div>
 
                 {/* Timeline Content Card */}
                 <div className="ml-12 md:ml-0 md:w-1/2">
-                  <div
+                  <motion.div
+                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
                     className={`p-6 sm:p-8 rounded-3xl border transition-all ${
                       item.highlight
                         ? "border-blue-500/40 dark:border-sky-500/40 bg-white dark:bg-slate-900 shadow-lg shadow-blue-500/5 dark:shadow-sky-500/5"
-                        : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 shadow-sm"
+                        : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 shadow-sm hover:shadow-md"
                     }`}
                   >
                     <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-sky-400 mb-2">
@@ -105,12 +131,12 @@ export function ExperienceTimeline() {
                         </span>
                       ))}
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Empty opposite placeholder to keep symmetry */}
                 <div className="hidden md:block md:w-1/2" />
-              </div>
+              </motion.div>
             );
           })}
         </div>

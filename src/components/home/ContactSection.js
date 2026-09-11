@@ -1,12 +1,21 @@
+"use client";
+
 import { ContactForm } from "@/components/contact/ContactForm";
 import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiFileText } from "react-icons/fi";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-20 bg-slate-50/60 dark:bg-slate-950/40 border-t border-slate-200/80 dark:border-slate-800/80 scroll-mt-20">
+    <section id="contact" className="py-20 bg-slate-50/60 dark:bg-slate-950/40 border-t border-slate-200/80 dark:border-slate-800/80 scroll-mt-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
           <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-sky-400">
             Get In Touch
           </span>
@@ -16,11 +25,17 @@ export function ContactSection() {
           <p className="mt-3 text-base text-slate-600 dark:text-slate-400">
             Have an open engineering role, a startup MVP to launch, or an inquiry? Send me a message or connect directly.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Direct Contacts */}
-          <div className="lg:col-span-5 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 space-y-6"
+          >
             <div className="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 shadow-xs space-y-6">
               <h3 className="text-lg font-bold text-slate-900 dark:text-white pb-3 border-b border-slate-100 dark:border-slate-800">
                 Direct Contact Channels
@@ -109,12 +124,18 @@ export function ContactSection() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Contact Form */}
-          <div className="lg:col-span-7">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7"
+          >
             <ContactForm />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
