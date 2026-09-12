@@ -8,7 +8,9 @@ import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Toaster } from "sonner";
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_CLIENT_URL || "https://takebulislam.dev"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_CLIENT_URL || "https://takebulislam.vercel.app",
+  ),
   title: {
     default: "Takebul Islam — Full-Stack Web Developer",
     template: "%s | Takebul Islam",
@@ -70,8 +72,14 @@ export const metadata = {
     images: ["/images/profile.jpg"],
   },
   icons: {
-    icon: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 

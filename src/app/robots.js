@@ -3,7 +3,7 @@ export default function robots() {
     process.env.NEXT_PUBLIC_CLIENT_URL &&
     !process.env.NEXT_PUBLIC_CLIENT_URL.includes("localhost")
       ? process.env.NEXT_PUBLIC_CLIENT_URL
-      : "https://takebulislam.dev";
+      : "https://takebulislam.vercel.app";
 
   return {
     rules: [

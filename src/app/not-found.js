@@ -11,7 +11,7 @@ export default function NotFound() {
         Page Not Found
       </h1>
       <p className="text-slate-600 dark:text-slate-400 max-w-md text-sm sm:text-base mb-8">
-        The page you are looking for doesn't exist or has been moved. Check the URL or return back to the portfolio homepage.
+        The page you are looking for doesn&apos;t exist or has been moved. Check the URL or return back to the portfolio homepage.
       </p>
       <div className="flex flex-wrap items-center justify-center gap-3">
         <Link

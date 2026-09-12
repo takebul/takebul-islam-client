@@ -1,4 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+import fs from 'fs';
+import path from 'path';
+import sharp from 'sharp';
+
+const SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <defs>
     <!-- Background Gradient -->
     <linearGradient id="ti-bg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -110,4 +114,82 @@
   <!-- Central Processor Micro Core Dot -->
   <circle cx="44" cy="62" r="3.5" fill="#ffffff" opacity="0.95" />
   <circle cx="44" cy="62" r="6" stroke="#00f2fe" stroke-width="1.5" opacity="0.5" />
-</svg>
+</svg>`;
+
+async function buildFavicons() {
+  const rootDir = 'c:/Assignment/my-portfolio/takebul-islam';
+  const appDir = path.join(rootDir, 'src/app');
+  const publicDir = path.join(rootDir, 'public');
+
+  console.log('Writing SVG master favicons...');
+  fs.writeFileSync(path.join(publicDir, 'icon.svg'), SVG_CONTENT, 'utf8');
+  fs.writeFileSync(path.join(appDir, 'icon.svg'), SVG_CONTENT, 'utf8');
+  fs.writeFileSync(path.join(appDir, 'apple-icon.svg'), SVG_CONTENT, 'utf8');
+
+  // Generate PNG buffers for multiple sizes
+  console.log('Generating PNG resolutions...');
+  const svgBuffer = Buffer.from(SVG_CONTENT);
+
+  const png16 = await sharp(svgBuffer).resize(16, 16).png().toBuffer();
+  const png32 = await sharp(svgBuffer).resize(32, 32).png().toBuffer();
+  const png48 = await sharp(svgBuffer).resize(48, 48).png().toBuffer();
+  const png180 = await sharp(svgBuffer).resize(180, 180).png().toBuffer();
+  const png192 = await sharp(svgBuffer).resize(192, 192).png().toBuffer();
+  const png512 = await sharp(svgBuffer).resize(512, 512).png().toBuffer();
+
+  // Save Apple touch icons & standard pngs
+  fs.writeFileSync(path.join(publicDir, 'apple-touch-icon.png'), png180);
+  fs.writeFileSync(path.join(appDir, 'apple-icon.png'), png180);
+  fs.writeFileSync(path.join(publicDir, 'icon-192.png'), png192);
+  fs.writeFileSync(path.join(publicDir, 'icon-512.png'), png512);
+
+  // Construct a valid multi-frame ICO file (16x16, 32x32, 48x48)
+  console.log('Building multi-resolution ICO file...');
+  const images = [
+    { width: 16, height: 16, buffer: png16 },
+    { width: 32, height: 32, buffer: png32 },
+    { width: 48, height: 48, buffer: png48 },
+  ];
+
+  const headerSize = 6;
+  const dirEntrySize = 16;
+  const count = images.length;
+  let offset = headerSize + dirEntrySize * count;
+
+  const header = Buffer.alloc(headerSize);
+  header.writeUInt16LE(0, 0); // Reserved
+  header.writeUInt16LE(1, 2); // 1 = ICO
+  header.writeUInt16LE(count, 4); // Count of images
+
+  const entries = [];
+  for (const img of images) {
+    const entry = Buffer.alloc(dirEntrySize);
+    entry.writeUInt8(img.width, 0);
+    entry.writeUInt8(img.height, 1);
+    entry.writeUInt8(0, 2); // Color palette
+    entry.writeUInt8(0, 3); // Reserved
+    entry.writeUInt16LE(1, 4); // Color planes
+    entry.writeUInt16LE(32, 6); // Bits per pixel
+    entry.writeUInt32LE(img.buffer.length, 8); // Image data size
+    entry.writeUInt32LE(offset, 12); // Offset to image data
+    entries.push(entry);
+    offset += img.buffer.length;
+  }
+
+  const icoBuffer = Buffer.concat([
+    header,
+    ...entries,
+    ...images.map(img => img.buffer)
+  ]);
+
+  fs.writeFileSync(path.join(appDir, 'favicon.ico'), icoBuffer);
+  fs.writeFileSync(path.join(publicDir, 'favicon.ico'), icoBuffer);
+
+  console.log('Successfully generated:');
+  console.log('- src/app/icon.svg & public/icon.svg');
+  console.log('- src/app/apple-icon.svg & src/app/apple-icon.png');
+  console.log('- src/app/favicon.ico & public/favicon.ico (' + icoBuffer.length + ' bytes)');
+  console.log('- public/icon-192.png & public/icon-512.png');
+}
+
+buildFavicons().catch(console.error);

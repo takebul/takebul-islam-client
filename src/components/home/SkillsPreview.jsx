@@ -25,11 +25,22 @@ const SKILL_GROUPS = [
   },
   {
     category: "Backend & Systems",
-    skills: ["Node.js", "Express.js", "MongoDB Atlas", "CRUD Architecture", "REST APIs"],
+    skills: [
+      "Node.js",
+      "Express.js",
+      "MongoDB Atlas",
+      "CRUD Architecture",
+      "REST APIs",
+    ],
   },
   {
     category: "Authentication & Security",
-    skills: ["JWT Authentication", "Google OAuth", "Better Auth", "Stripe Integration"],
+    skills: [
+      "JWT Authentication",
+      "Google OAuth",
+      "Better Auth",
+      "Stripe Integration",
+    ],
   },
   {
     category: "Developer Tools & Cloud",
@@ -53,7 +64,10 @@ const SKILL_GROUPS = [
 
 export function SkillsPreview() {
   return (
-    <section id="skills" className="py-20 bg-slate-50/60 dark:bg-slate-950/40 border-t border-slate-200/80 dark:border-slate-800/80 scroll-mt-20 overflow-hidden">
+    <section
+      id="skills"
+      className="py-20 bg-slate-50/60 dark:bg-slate-950/40 border-t border-slate-200/80 dark:border-slate-800/80 scroll-mt-20 overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -65,13 +79,14 @@ export function SkillsPreview() {
         >
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 font-mono">
-              // Technical Stack
+              {"// Technical Stack"}
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-1.5">
               Core Skills &amp; Tools
             </h2>
             <p className="mt-2 text-base text-slate-600 dark:text-slate-400 max-w-2xl">
-              Technologies I use to design, build, test, and deploy resilient full-stack applications.
+              Technologies I use to design, build, test, and deploy resilient
+              full-stack applications.
             </p>
           </div>
 
