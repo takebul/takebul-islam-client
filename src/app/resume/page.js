@@ -263,7 +263,7 @@ export default function ResumePage() {
                   </a>
                   <span>|</span>
                   <a
-                    href="https://github.com/takebul/tutor-booking-client"
+                    href="https://github.com/takebul/tutor-booking-server"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:underline"
