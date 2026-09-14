@@ -7,10 +7,11 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Toaster } from "sonner";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_CLIENT_URL || "https://takebulislam.vercel.app";
+
 export const metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_CLIENT_URL || "https://takebulislam.vercel.app",
-  ),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Takebul Islam — Full-Stack Web Developer",
     template: "%s | Takebul Islam",
@@ -34,7 +35,7 @@ export const metadata = {
   authors: [{ name: "Takebul Islam", url: "https://github.com/takebul" }],
   creator: "Takebul Islam",
   alternates: {
-    canonical: "./",
+    canonical: "/",
   },
   robots: {
     index: true,
@@ -50,7 +51,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://takebulislam.dev",
+    url: siteUrl,
     title: "Takebul Islam — Full-Stack Web Developer",
     description:
       "Full-Stack Web Developer building complete, polished, real-world web applications from idea to deployment.",
@@ -88,14 +89,14 @@ const JSON_LD_DATA = {
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://takebulislam.dev/#person",
+      "@id": `${siteUrl}/#person`,
       name: "Takebul Islam",
       alternateName: ["Takebul", "Takebul Islam Developer"],
       jobTitle: "Full-Stack Web Developer",
       description:
         "Full-Stack Web Developer specializing in React, Next.js, Node.js, Express.js, and MongoDB. Building complete, polished, real-world web applications from idea to deployment.",
-      url: "https://takebulislam.dev",
-      image: "https://takebulislam.dev/images/profile.jpg",
+      url: siteUrl,
+      image: `${siteUrl}/images/profile.jpg`,
       sameAs: [
         "https://github.com/takebul",
         "https://www.linkedin.com/in/takebulislam",
@@ -126,13 +127,13 @@ const JSON_LD_DATA = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://takebulislam.dev/#website",
-      url: "https://takebulislam.dev",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
       name: "Takebul Islam — Full-Stack Web Developer",
       description:
         "Official portfolio of Takebul Islam featuring full-stack applications, technical skills, case studies, and official resume.",
       author: {
-        "@id": "https://takebulislam.dev/#person",
+        "@id": `${siteUrl}/#person`,
       },
     },
   ],
